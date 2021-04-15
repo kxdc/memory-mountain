@@ -58,4 +58,6 @@ int main(int argc, char* argv[])
 
         target_loop *= 10;
     }
+    
+    return 0;
 }
