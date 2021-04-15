@@ -15,8 +15,17 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    size_t size = atoll(argv[1]);
-    int stride = atoll(argv[2]);
+    int stride = atoll(argv[2]);                // size of each step
+    size_t size = atoll(argv[1]);               // size of data_array
+    size_t count = size / sizeof(data_t);       // elements number of data_array
+    data_t* data_array = (data_t*)malloc(size); // the data array
+    printf("size = %ju, stride=%d\n", size, stride);
 
-    size_t count = size / sizeof(data_t);
+    double duration = 0; // in microsecond-level
+    int repeats = 1;
+
+    while(1)
+    {
+        volatile data_t dummy=0;
+    }
 }
