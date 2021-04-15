@@ -39,6 +39,7 @@ int main(int argc, char* argv[])
     while(1)
     {
         volatile data_t dummy=0;
+        dummy += mount(data_array, count, stride); // cache warm up
 
         clock_t start_time = clock();
         for(int i = 1; i < target_loop; i++)
