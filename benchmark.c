@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // define datatype to generate results
 typedef double data_t;
@@ -32,11 +33,28 @@ int main(int argc, char* argv[])
     data_t* data_array = (data_t*)malloc(size); // the data array
     printf("size = %ju, stride=%d\n", size, stride);
 
-    double duration = 0; // in microsecond-level
-    int repeats = 1;
+    double duration = 0; // in ms-level
+    int target_loop = 1;
 
     while(1)
     {
         volatile data_t dummy=0;
+
+        clock_t start_time = clock();
+        for(int i = 1; i < target_loop; i++)
+        {
+            dummy += mount(data_array, count, stride);
+        }
+        clock_t stop_time = clock();
+
+        duration = (uintmax_t)stop_time - (uintmax_t)start_time;
+        printf("%d repeats -> %f\n", target_loop, duration);
+
+        if(target_loop > 1000)
+        {
+            break;
+        }
+
+        target_loop *= 10;
     }
 }
