@@ -4,6 +4,17 @@
 // define datatype to generate results
 typedef double data_t;
 
+data_t mount(data_t* data, size_t count, int stride)
+{
+    data_t result = 0;
+    for(size_t i = 0; i < count; i += stride)
+    {
+        result += data[i];
+    }
+
+    return result;
+}
+
 int main(int argc, char* argv[])
 {
     if(argc != 3)
