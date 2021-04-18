@@ -58,6 +58,12 @@ int main(int argc, char* argv[])
 
         target_loop *= 10;
     }
+
+    double duration_last_loop = duration / target_loop;
+    size_t quantity - (count/stride)*sizeof(data_t);
+
+    printf("Read %s bytes data in %f ms, speed is %.1f MB/s \n",
+           quantity, duration_last_loop, ((float)quantity/duration_last_loop);
     
     return 0;
 }
