@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-// define datatype to generate results
-typedef double data_t;
+typedef double data_t; // define datatype to generate results
 
 data_t mount(data_t* data, size_t count, int stride)
 {
