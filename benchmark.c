@@ -4,6 +4,24 @@
 
 typedef double data_t; // define datatype to generate results
 
+char* transfer_size(size_t origin_size)
+{
+    char* size_unit[] = { "B", "kB", "MB", "GB" };
+    char* transferred_size = (char*)malloc(10); // result to return
+    int unit_index = 0;
+    float size = origin_size;
+        
+    while(size >= 1000)
+    {
+        size /= 1000;
+        unit_index++;
+    }
+
+    sprintf(transferred_size, "%.1f%s", size, size_unit[unit_index]);
+
+    return transferred_size;
+}
+
 data_t mount(data_t* data, size_t count, int stride)
 {
     data_t result = 0;
