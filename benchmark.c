@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/time.h>
 
 typedef double data_t; // define datatype to generate results
 static char* size_units[] = { "B", "kB", "MB", "GB" };
+static char* time_units[] = { "ns", "us", "ms", "s" };
 
 char* transfer_size(size_t origin_size)
 {
@@ -20,6 +22,26 @@ char* transfer_size(size_t origin_size)
     sprintf(transferred_size, "%.1f%s", size, size_units[unit_index]);
 
     return transferred_size;
+}
+
+char* transfer_time(double origin_time, int unit_index)
+{
+    if(unit_index < 0)
+    {
+        return NULL;
+    }
+    int time = origin_time;
+    char* transferred_time = (char*)malloc(10);
+
+    while(time > 1000)
+    {
+        time /= 1000;
+        unit_index++;
+    }
+
+    sprintf(transferred_time, "%.2f%s", (double)time, time_units[unit_index]);
+
+    return transferred_time;
 }
 
 data_t mount(data_t* data, size_t count, int stride)
@@ -66,7 +88,7 @@ int main(int argc, char* argv[])
         clock_t stop_time = clock();
 
         duration = (uintmax_t)stop_time - (uintmax_t)start_time;
-        printf("%d repeats -> %f\n", target_loop, duration);
+        printf("%d repeats -> %s\n", target_loop, transfer_time(duration, 1));
 
         if(target_loop > 1000)
         {
@@ -79,8 +101,9 @@ int main(int argc, char* argv[])
     double duration_last_loop = duration / target_loop;
     size_t quantity = (count/stride) * sizeof(data_t);
 
-    printf("Read %s bytes data in %f ms, speed is %.1f MB/s \n",
-           transfer_size(quantity), duration_last_loop,
+    printf("Read %s bytes data in %s ms, speed is %.1f MB/s \n",
+           transfer_size(quantity),
+           transfer_time(duration_last_loop, 1),
            ((float)quantity/duration_last_loop));
     
     return 0;
