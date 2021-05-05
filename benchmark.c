@@ -3,10 +3,10 @@
 #include <time.h>
 
 typedef double data_t; // define datatype to generate results
+static char* size_units[] = { "B", "kB", "MB", "GB" };
 
 char* transfer_size(size_t origin_size)
 {
-    char* size_unit[] = { "B", "kB", "MB", "GB" };
     char* transferred_size = (char*)malloc(10); // result to return
     int unit_index = 0;
     float size = origin_size;
@@ -17,7 +17,7 @@ char* transfer_size(size_t origin_size)
         unit_index++;
     }
 
-    sprintf(transferred_size, "%.1f%s", size, size_unit[unit_index]);
+    sprintf(transferred_size, "%.1f%s", size, size_units[unit_index]);
 
     return transferred_size;
 }
